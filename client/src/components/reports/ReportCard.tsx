@@ -1,6 +1,6 @@
 import { RadiologyReport } from "../../types";
 import { format } from "date-fns";
-import { Chip } from "@nextui-org/react";
+import { Chip } from "../../lib/mui";
 
 interface ReportCardProps {
   report: RadiologyReport;
@@ -12,7 +12,7 @@ const colorForBirads = (value?: number) => {
   if (value <= 2) return "success";
   if (value === 3) return "warning";
   if (value === 4) return "warning";
-  return "danger";
+  return "error";
 };
 
 const ReportCard = ({ report, onSelect }: ReportCardProps) => {
@@ -28,7 +28,7 @@ const ReportCard = ({ report, onSelect }: ReportCardProps) => {
             {report.created_date ? format(new Date(report.created_date), "PPP") : "-"}
           </p>
         </div>
-        <Chip color={colorForBirads(report.birads?.value)} size="sm" variant="flat">
+        <Chip color={colorForBirads(report.birads?.value)} size="small" variant="outlined">
           BI-RADS {report.birads?.value ?? "N/A"}
         </Chip>
       </div>

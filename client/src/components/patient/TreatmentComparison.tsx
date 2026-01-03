@@ -1,4 +1,4 @@
-import { Button, Card, Input } from "@nextui-org/react";
+import { Button, Card, CardContent, TextField } from "../../lib/mui";
 import { useState } from "react";
 import api from "../../lib/api";
 import { Patient } from "../../types";
@@ -60,37 +60,37 @@ const TreatmentComparison = ({ patient }: TreatmentComparisonProps) => {
     <div className="space-y-4">
       <div className="grid gap-3">
         {options.map((option, index) => (
-          <Input
+          <TextField
             key={`option-${index}`}
             label={`Option ${index + 1}`}
             value={option}
-            onValueChange={(value) => handleChange(value, index)}
+            onChange={(event) => handleChange(event.target.value, index)}
           />
         ))}
       </div>
       <div className="flex gap-3">
-        <Button variant="bordered" onClick={handleAdd} isDisabled={options.length >= 5}>
+        <Button variant="outlined" onClick={handleAdd} disabled={options.length >= 5}>
           Add Option
         </Button>
-        <Button color="primary" onClick={handleCompare} isLoading={loading}>
-          Compare Treatments
+        <Button variant="contained" onClick={handleCompare} disabled={loading}>
+          {loading ? "Comparing..." : "Compare Treatments"}
         </Button>
       </div>
 
       {result?.options?.length ? (
         <div className="grid gap-4">
           {result.options.map((option) => (
-            <Card key={option.name} className="p-4">
-              <div className="flex items-center justify-between">
-                <h4 className="font-semibold">{option.name}</h4>
-                <span className="text-sm text-rose-600 font-semibold">Score {option.score}/10</span>
-              </div>
-              <p className="text-xs text-slate-500 mt-1">Efficacy: {option.efficacy_rate}</p>
-              <p className="text-xs text-slate-600 mt-2">Benefits: {option.benefits.join(", ")}</p>
-              <p className="text-xs text-slate-600 mt-1">
-                Side effects: {option.side_effects.join(", ")}
-              </p>
-              <p className="text-xs text-slate-600 mt-1">Duration: {option.duration}</p>
+            <Card key={option.name}>
+              <CardContent className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold">{option.name}</h4>
+                  <span className="text-sm text-rose-600 font-semibold">Score {option.score}/10</span>
+                </div>
+                <p className="text-xs text-slate-500">Efficacy: {option.efficacy_rate}</p>
+                <p className="text-xs text-slate-600">Benefits: {option.benefits.join(", ")}</p>
+                <p className="text-xs text-slate-600">Side effects: {option.side_effects.join(", ")}</p>
+                <p className="text-xs text-slate-600">Duration: {option.duration}</p>
+              </CardContent>
             </Card>
           ))}
         </div>

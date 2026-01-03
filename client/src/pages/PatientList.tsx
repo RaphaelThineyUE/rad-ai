@@ -1,5 +1,18 @@
 import { useMemo, useState } from "react";
-import { Button, Input, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField
+} from "../lib/mui";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -49,40 +62,64 @@ const PatientList = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-3 items-center">
-        <Input label="Search" value={search} onValueChange={setSearch} className="max-w-xs" />
-        <Select label="Stage" selectedKeys={stage ? [stage] : []} onSelectionChange={(keys) => setStage(Array.from(keys)[0] as string)}>
-          {stages.map((item) => (
-            <SelectItem key={item}>{item}</SelectItem>
-          ))}
-        </Select>
-        <Input label="Cancer type" value={type} onValueChange={setType} className="max-w-xs" />
-        <Button color="primary" onClick={() => setDialogOpen(true)}>
+        <TextField label="Search" value={search} onChange={(event) => setSearch(event.target.value)} className="max-w-xs" />
+        <FormControl className="min-w-[180px]">
+          <InputLabel id="stage-filter-label">Stage</InputLabel>
+          <Select
+            labelId="stage-filter-label"
+            label="Stage"
+            value={stage}
+            onChange={(event) => setStage(event.target.value)}
+          >
+            {stages.map((item) => (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField label="Cancer type" value={type} onChange={(event) => setType(event.target.value)} className="max-w-xs" />
+        <Button variant="contained" onClick={() => setDialogOpen(true)}>
           Add Patient
         </Button>
       </div>
 
       <div className="rad-card p-4">
-        <Table aria-label="Patients">
-          <TableHeader>
-            <TableColumn>Name</TableColumn>
-            <TableColumn>Stage</TableColumn>
-            <TableColumn>Type</TableColumn>
-            <TableColumn>Diagnosis</TableColumn>
-          </TableHeader>
-          <TableBody
-            items={filtered}
-            emptyContent={patientsQuery.isLoading ? "Loading..." : "No patients found"}
-          >
-            {(patient) => (
-              <TableRow key={patient._id} onClick={() => navigate(`/patients/${patient._id}`)}>
-                <TableCell>{patient.full_name}</TableCell>
-                <TableCell>{patient.cancer_stage}</TableCell>
-                <TableCell>{patient.cancer_type}</TableCell>
-                <TableCell>{new Date(patient.diagnosis_date).toLocaleDateString()}</TableCell>
+        <TableContainer>
+          <Table aria-label="Patients">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Stage</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Diagnosis</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {filtered.length ? (
+                filtered.map((patient) => (
+                  <TableRow
+                    key={patient._id}
+                    hover
+                    className="cursor-pointer"
+                    onClick={() => navigate(`/patients/${patient._id}`)}
+                  >
+                    <TableCell>{patient.full_name}</TableCell>
+                    <TableCell>{patient.cancer_stage}</TableCell>
+                    <TableCell>{patient.cancer_type}</TableCell>
+                    <TableCell>{new Date(patient.diagnosis_date).toLocaleDateString()}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4}>
+                    {patientsQuery.isLoading ? "Loading..." : "No patients found"}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
 
       <AddPatientDialog isOpen={dialogOpen} onClose={() => setDialogOpen(false)} onSubmit={handleAdd} />

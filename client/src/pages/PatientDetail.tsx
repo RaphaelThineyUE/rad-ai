@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Badge, Card, Chip, Tab, Tabs } from "@nextui-org/react";
+import { Card, CardContent, Chip, Tab, Tabs } from "../lib/mui";
 import api from "../lib/api";
 import { Patient, TreatmentRecord } from "../types";
 import PatientTimeline from "../components/patient/PatientTimeline";
@@ -9,6 +10,7 @@ import TreatmentComparisonCharts from "../components/patient/TreatmentComparison
 
 const PatientDetail = () => {
   const { id } = useParams();
+  const [tabValue, setTabValue] = useState("overview");
 
   const patientQuery = useQuery({
     queryKey: ["patient", id],
@@ -45,8 +47,8 @@ const PatientDetail = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="p-6">
-        <div className="flex flex-wrap gap-4 items-center justify-between">
+      <Card>
+        <CardContent className="flex flex-wrap gap-4 items-center justify-between">
           <div>
             <h2 className="text-xl font-semibold">{patient.full_name}</h2>
             <p className="text-sm text-slate-500">
@@ -54,31 +56,41 @@ const PatientDetail = () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Chip color="primary" variant="flat">
-              {patient.cancer_stage}
-            </Chip>
-            <Badge color="secondary">ER {patient.er_status || "Unknown"}</Badge>
-            <Badge color="secondary">PR {patient.pr_status || "Unknown"}</Badge>
-            <Badge color="secondary">HER2 {patient.her2_status || "Unknown"}</Badge>
+            <Chip color="primary" variant="outlined" label={patient.cancer_stage} />
+            <Chip color="secondary" variant="outlined" label={`ER ${patient.er_status || "Unknown"}`} />
+            <Chip color="secondary" variant="outlined" label={`PR ${patient.pr_status || "Unknown"}`} />
+            <Chip color="secondary" variant="outlined" label={`HER2 ${patient.her2_status || "Unknown"}`} />
           </div>
-        </div>
+        </CardContent>
       </Card>
 
-      <Tabs aria-label="Patient tabs">
-        <Tab key="overview" title="Overview">
-          <div className="rad-card p-6 space-y-3">
+      <div>
+        <Tabs
+          value={tabValue}
+          onChange={(_event, value) => setTabValue(value)}
+          aria-label="Patient tabs"
+          textColor="primary"
+          indicatorColor="primary"
+        >
+          <Tab value="overview" label="Overview" />
+          <Tab value="timeline" label="Timeline" />
+          <Tab value="treatments" label="Treatments" />
+          <Tab value="comparison" label="Treatment Comparison" />
+        </Tabs>
+        {tabValue === "overview" && (
+          <div className="rad-card p-6 space-y-3 mt-4">
             <p className="text-sm text-slate-600">Diagnosis date: {new Date(patient.diagnosis_date).toLocaleDateString()}</p>
             <p className="text-sm text-slate-600">Cancer type: {patient.cancer_type}</p>
             <p className="text-sm text-slate-600">Initial plan: {patient.initial_treatment_plan || "Not set"}</p>
           </div>
-        </Tab>
-        <Tab key="timeline" title="Timeline">
-          <div className="rad-card p-6">
+        )}
+        {tabValue === "timeline" && (
+          <div className="rad-card p-6 mt-4">
             <PatientTimeline patient={patient} treatments={treatments} />
           </div>
-        </Tab>
-        <Tab key="treatments" title="Treatments">
-          <div className="rad-card p-6 space-y-3">
+        )}
+        {tabValue === "treatments" && (
+          <div className="rad-card p-6 space-y-3 mt-4">
             {treatments.length ? (
               treatments.map((treatment) => (
                 <div key={treatment._id} className="p-4 border border-pink-100 rounded-xl">
@@ -90,16 +102,16 @@ const PatientDetail = () => {
               <p className="text-sm text-slate-500">No treatments recorded.</p>
             )}
           </div>
-        </Tab>
-        <Tab key="comparison" title="Treatment Comparison">
-          <div className="space-y-6">
+        )}
+        {tabValue === "comparison" && (
+          <div className="space-y-6 mt-4">
             <div className="rad-card p-6">
               <TreatmentComparison patient={patient} />
             </div>
             <TreatmentComparisonCharts outcomeData={outcomeData} stageData={stageData} />
           </div>
-        </Tab>
-      </Tabs>
+        )}
+      </div>
     </div>
   );
 };

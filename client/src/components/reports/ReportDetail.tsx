@@ -1,5 +1,5 @@
 import { RadiologyReport } from "../../types";
-import { Button } from "@nextui-org/react";
+import { Button, IconButton } from "../../lib/mui";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, FileText, Trash2, X } from "lucide-react";
 
@@ -27,9 +27,9 @@ const ReportDetail = ({ report, onClose, onDelete }: ReportDetailProps) => {
           >
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Report Detail</h2>
-              <Button isIconOnly variant="light" onClick={onClose}>
+              <IconButton onClick={onClose} size="small">
                 <X size={18} />
-              </Button>
+              </IconButton>
             </div>
 
             {report.red_flags?.length ? (
@@ -102,13 +102,13 @@ const ReportDetail = ({ report, onClose, onDelete }: ReportDetailProps) => {
 
             <div className="mt-8 flex gap-3">
               <Button
-                variant="bordered"
-                startContent={<FileText size={16} />}
+                variant="outlined"
+                startIcon={<FileText size={16} />}
                 onClick={() => report.file_url && window.open(report.file_url, "_blank")}
               >
                 View PDF
               </Button>
-              <Button color="danger" startContent={<Trash2 size={16} />} onClick={() => onDelete(report)}>
+              <Button variant="contained" color="error" startIcon={<Trash2 size={16} />} onClick={() => onDelete(report)}>
                 Delete
               </Button>
             </div>

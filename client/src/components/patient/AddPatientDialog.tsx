@@ -1,4 +1,4 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem } from "@nextui-org/react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from "../../lib/mui";
 import { useForm } from "react-hook-form";
 
 interface AddPatientDialogProps {
@@ -10,7 +10,16 @@ interface AddPatientDialogProps {
 const stages = ["Stage 0", "Stage I", "Stage II", "Stage III", "Stage IV", "Unknown"];
 
 const AddPatientDialog = ({ isOpen, onClose, onSubmit }: AddPatientDialogProps) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      full_name: "",
+      date_of_birth: "",
+      gender: "",
+      diagnosis_date: "",
+      cancer_type: "",
+      cancer_stage: ""
+    }
+  });
 
   const handleSave = handleSubmit((values) => {
     onSubmit(values as Record<string, string>);
@@ -18,39 +27,51 @@ const AddPatientDialog = ({ isOpen, onClose, onSubmit }: AddPatientDialogProps) 
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="2xl">
-      <ModalContent>
-        <ModalHeader>Add Patient</ModalHeader>
-        <ModalBody className="gap-4">
-          <Input label="Full name" {...register("full_name", { required: true })} />
-          <Input type="date" label="Date of birth" {...register("date_of_birth", { required: true })} />
-          <Select label="Gender" {...register("gender", { required: true })}>
-            {[
-              { key: "Female", label: "Female" },
-              { key: "Male", label: "Male" },
-              { key: "Other", label: "Other" }
-            ].map((item) => (
-              <SelectItem key={item.key}>{item.label}</SelectItem>
-            ))}
-          </Select>
-          <Input type="date" label="Diagnosis date" {...register("diagnosis_date", { required: true })} />
-          <Input label="Cancer type" {...register("cancer_type", { required: true })} />
-          <Select label="Cancer stage" {...register("cancer_stage", { required: true })}>
-            {stages.map((stage) => (
-              <SelectItem key={stage}>{stage}</SelectItem>
-            ))}
-          </Select>
-        </ModalBody>
-        <ModalFooter>
-          <Button variant="flat" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button color="primary" onClick={handleSave}>
-            Save Patient
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>Add Patient</DialogTitle>
+      <DialogContent className="flex flex-col gap-4">
+        <TextField label="Full name" {...register("full_name", { required: true })} />
+        <TextField
+          type="date"
+          label="Date of birth"
+          InputLabelProps={{ shrink: true }}
+          {...register("date_of_birth", { required: true })}
+        />
+        <TextField label="Gender" select {...register("gender", { required: true })}>
+          {[
+            { key: "Female", label: "Female" },
+            { key: "Male", label: "Male" },
+            { key: "Other", label: "Other" }
+          ].map((item) => (
+            <MenuItem key={item.key} value={item.key}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          type="date"
+          label="Diagnosis date"
+          InputLabelProps={{ shrink: true }}
+          {...register("diagnosis_date", { required: true })}
+        />
+        <TextField label="Cancer type" {...register("cancer_type", { required: true })} />
+        <TextField label="Cancer stage" select {...register("cancer_stage", { required: true })}>
+          {stages.map((stage) => (
+            <MenuItem key={stage} value={stage}>
+              {stage}
+            </MenuItem>
+          ))}
+        </TextField>
+      </DialogContent>
+      <DialogActions className="px-6 pb-4">
+        <Button variant="outlined" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button variant="contained" onClick={handleSave}>
+          Save Patient
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

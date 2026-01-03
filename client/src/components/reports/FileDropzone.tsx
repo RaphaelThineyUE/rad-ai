@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Button } from "@nextui-org/react";
+import { Button } from "../../lib/mui";
 import { UploadCloud } from "lucide-react";
 
 interface FileDropzoneProps {
@@ -34,8 +34,8 @@ const FileDropzone = ({ disabled, onFileSelected }: FileDropzoneProps) => {
           Drag & drop a PDF radiology report or click to upload.
         </p>
         <Button
-          color="primary"
-          isDisabled={disabled}
+          variant="contained"
+          disabled={disabled}
           onClick={() => document.getElementById("file-input")?.click()}
         >
           Upload PDF
