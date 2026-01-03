@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.rad-card {
+  @apply bg-white rounded-2xl shadow-sm border border-pink-100;
+}
