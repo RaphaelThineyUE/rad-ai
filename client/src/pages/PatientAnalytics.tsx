@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { Tab, Tabs } from "@nextui-org/react";
+import { useMemo, useState } from "react";
+import { Tab, Tabs } from "../lib/mui";
 import { useQuery } from "@tanstack/react-query";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import api from "../lib/api";
@@ -8,6 +8,7 @@ import { Patient, TreatmentRecord } from "../types";
 const chartColors = ["#f472b6", "#fb7185", "#f97316", "#60a5fa", "#4ade80"];
 
 const PatientAnalytics = () => {
+  const [tabValue, setTabValue] = useState("demographics");
   const patientsQuery = useQuery({
     queryKey: ["patients"],
     queryFn: async () => {
@@ -66,9 +67,20 @@ const PatientAnalytics = () => {
         </div>
       </div>
 
-      <Tabs aria-label="Analytics tabs">
-        <Tab key="demographics" title="Demographics">
-          <div className="grid md:grid-cols-2 gap-6">
+      <div>
+        <Tabs
+          value={tabValue}
+          onChange={(_event, value) => setTabValue(value)}
+          aria-label="Analytics tabs"
+          textColor="primary"
+          indicatorColor="primary"
+        >
+          <Tab value="demographics" label="Demographics" />
+          <Tab value="diagnostic" label="Diagnostic" />
+          <Tab value="treatment" label="Treatment" />
+        </Tabs>
+        {tabValue === "demographics" && (
+          <div className="grid md:grid-cols-2 gap-6 mt-4">
             <div className="rad-card p-4 h-72">
               <h4 className="text-sm font-semibold mb-4">Cancer Stage</h4>
               <ResponsiveContainer width="100%" height="100%">
@@ -94,9 +106,9 @@ const PatientAnalytics = () => {
               </ResponsiveContainer>
             </div>
           </div>
-        </Tab>
-        <Tab key="diagnostic" title="Diagnostic">
-          <div className="rad-card p-4 h-72">
+        )}
+        {tabValue === "diagnostic" && (
+          <div className="rad-card p-4 h-72 mt-4">
             <h4 className="text-sm font-semibold mb-4">Diagnostic Type Distribution</h4>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={typeData}>
@@ -107,9 +119,9 @@ const PatientAnalytics = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </Tab>
-        <Tab key="treatment" title="Treatment">
-          <div className="rad-card p-4 h-72">
+        )}
+        {tabValue === "treatment" && (
+          <div className="rad-card p-4 h-72 mt-4">
             <h4 className="text-sm font-semibold mb-4">Treatment Outcomes</h4>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={outcomeData}>
@@ -120,8 +132,8 @@ const PatientAnalytics = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </Tab>
-      </Tabs>
+        )}
+      </div>
     </div>
   );
 };

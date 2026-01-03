@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { Button, Menu, MenuItem } from "../../lib/mui";
 import { LogOut, User } from "lucide-react";
 
 const navItems = [
@@ -11,6 +11,8 @@ const navItems = [
 ];
 
 const Layout = ({ children }: PropsWithChildren) => {
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+
   const handleLogout = () => {
     localStorage.removeItem("radreport_token");
     window.location.href = "/login";
@@ -36,18 +38,32 @@ const Layout = ({ children }: PropsWithChildren) => {
               </NavLink>
             ))}
           </nav>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="flat" startContent={<User size={16} />}>
-                Account
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu>
-              <DropdownItem key="logout" startContent={<LogOut size={16} />} onClick={handleLogout}>
+          <div>
+            <Button
+              variant="outlined"
+              startIcon={<User size={16} />}
+              onClick={(event) => setMenuAnchor(event.currentTarget)}
+            >
+              Account
+            </Button>
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={() => setMenuAnchor(null)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <MenuItem
+                onClick={() => {
+                  setMenuAnchor(null);
+                  handleLogout();
+                }}
+              >
+                <LogOut size={16} className="mr-2" />
                 Logout
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
       </header>
       <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>

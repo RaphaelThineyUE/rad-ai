@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button, Card, Select, SelectItem } from "@nextui-org/react";
+import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select } from "../lib/mui";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -112,25 +112,32 @@ const Home = () => {
           { label: "Needs Review", value: stats.needsReview }
         ].map((card) => (
           <motion.div key={card.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="p-5">
-              <p className="text-sm text-slate-500">{card.label}</p>
-              <p className="text-2xl font-semibold text-slate-800">{card.value}</p>
+            <Card>
+              <CardContent className="space-y-1">
+                <p className="text-sm text-slate-500">{card.label}</p>
+                <p className="text-2xl font-semibold text-slate-800">{card.value}</p>
+              </CardContent>
             </Card>
           </motion.div>
         ))}
       </div>
 
       <div className="rad-card p-5">
-        <Select
-          label="Select patient"
-          placeholder="Choose patient"
-          selectedKeys={selectedPatient ? [selectedPatient] : []}
-          onSelectionChange={(keys) => setSelectedPatient(Array.from(keys)[0] as string)}
-        >
-          {(patientsQuery.data || []).map((patient) => (
-            <SelectItem key={patient._id}>{patient.full_name}</SelectItem>
-          ))}
-        </Select>
+        <FormControl fullWidth>
+          <InputLabel id="select-patient-label">Select patient</InputLabel>
+          <Select
+            labelId="select-patient-label"
+            label="Select patient"
+            value={selectedPatient}
+            onChange={(event) => setSelectedPatient(event.target.value)}
+          >
+            {(patientsQuery.data || []).map((patient) => (
+              <MenuItem key={patient._id} value={patient._id}>
+                {patient.full_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       <FileDropzone disabled={!selectedPatient} onFileSelected={handleUpload} />
@@ -138,9 +145,8 @@ const Home = () => {
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Reports</h2>
         <Button
-          color="primary"
-          variant="flat"
-          isDisabled={(reportsQuery.data || []).filter((r) => r.status === "completed").length < 2}
+          variant="contained"
+          disabled={(reportsQuery.data || []).filter((r) => r.status === "completed").length < 2}
           onClick={handleConsolidate}
         >
           View Consolidated

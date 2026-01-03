@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, Checkbox } from "@nextui-org/react";
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControlLabel } from "../lib/mui";
 
 const steps = [
   "Create or select a patient profile",
@@ -38,22 +38,23 @@ const HowTo = () => {
         <h2 className="text-xl font-semibold">Getting Started Checklist</h2>
         <div className="mt-4 grid gap-2">
           {steps.map((step) => (
-            <Checkbox key={step} defaultSelected={false}>
-              {step}
-            </Checkbox>
+            <FormControlLabel key={step} control={<Checkbox />} label={step} />
           ))}
         </div>
       </div>
 
       <div className="rad-card p-6">
         <h3 className="text-lg font-semibold mb-3">Feature Guides & Pro Tips</h3>
-        <Accordion>
-          {sections.map((section) => (
-            <AccordionItem key={section.title} aria-label={section.title} title={section.title}>
+        {sections.map((section) => (
+          <Accordion key={section.title}>
+            <AccordionSummary>
+              <h4 className="text-sm font-semibold">{section.title}</h4>
+            </AccordionSummary>
+            <AccordionDetails>
               <p className="text-sm text-slate-600">{section.content}</p>
-            </AccordionItem>
-          ))}
-        </Accordion>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </div>
 
       <div className="rad-card p-6 border border-rose-200 bg-rose-50">
