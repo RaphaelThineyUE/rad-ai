@@ -1,0 +1,43 @@
+{
+  "name": "radreport-ai-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --max-warnings=0"
+  },
+  "dependencies": {
+    "@nextui-org/react": "^2.4.6",
+    "@tanstack/react-query": "^5.51.23",
+    "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
+    "framer-motion": "^11.3.12",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.26.0",
+    "recharts": "^2.12.7",
+    "sonner": "^1.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/lodash": "^4.17.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.7.0",
+    "eslint-plugin-react": "^7.35.0",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.9",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.5"
+  }
+}
