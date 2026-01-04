@@ -49,4 +49,3 @@ test.describe('Patient Detail Page', () => {
     expect(url).toContain('/patients/1');
   });
 });
-

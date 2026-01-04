@@ -37,4 +37,3 @@ test.describe('Home Page', () => {
     expect(url).toContain('localhost');
   });
 });
-

@@ -29,4 +29,3 @@ test.describe('How-To Page', () => {
     expect(url).toContain('/how-to');
   });
 });
-

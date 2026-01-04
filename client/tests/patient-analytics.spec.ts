@@ -48,4 +48,3 @@ test.describe('Patient Analytics Page', () => {
     expect(url).toContain('/analytics');
   });
 });
-

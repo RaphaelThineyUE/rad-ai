@@ -41,4 +41,3 @@ test.describe('Patient List Page', () => {
     expect(url).toContain('/patients');
   });
 });
-
