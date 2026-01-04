@@ -7,9 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install all dependencies (including devDependencies for build)
-# Note: npm ci has a known bug with Docker BuildKit that shows "Exit handler never called" 
-# but still installs packages successfully. We check for tsc to verify.
-RUN npm ci && test -f node_modules/.bin/tsc || (echo "Dependencies failed to install" && exit 1)
+RUN npm ci
 
 # Copy source files
 COPY tsconfig.json ./
