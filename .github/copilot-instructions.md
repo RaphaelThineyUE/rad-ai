@@ -44,7 +44,7 @@ This is a radiology AI assistant application built as a monorepo with separate c
 
 ### Code Style
 - Use double quotes for strings in TypeScript/JavaScript
-- No semicolons required (not enforced by ESLint)
+- Use semicolons consistently (follow existing patterns in the codebase)
 - Use arrow functions for React components and callbacks
 - Import React hooks from "react" (not as default import)
 - React components do not require `import React` (JSX transform enabled)
@@ -102,7 +102,7 @@ This is a radiology AI assistant application built as a monorepo with separate c
 - Use CORS appropriately (currently enabled for development)
 
 ### Environment Variables
-- Client: `VITE_API_URL` for API endpoint configuration
+- Client: `VITE_API_BASE_URL` for API endpoint configuration
 - Server: `PORT`, `MONGODB_URI`, `JWT_SECRET`, `OPENAI_API_KEY`, etc.
 - Always document required environment variables in `.env.example`
 
