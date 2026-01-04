@@ -1,5 +1,5 @@
 import { RadiologyReport } from "../../types";
-import { Button, IconButton } from "../../lib/mui";
+import { Button, IconButton } from "../../lib/radix";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, FileText, Trash2, X } from "lucide-react";
 

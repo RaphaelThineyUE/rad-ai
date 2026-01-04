@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent, DialogTitle } from "../../lib/mui";
+import { Button, Dialog, DialogContent, DialogTitle } from "../../lib/radix";
 import ReactMarkdown from "react-markdown";
 import { RadiologyReport } from "../../types";
 

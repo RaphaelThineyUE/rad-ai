@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Tab, Tabs } from "../lib/mui";
+import { Tab, Tabs } from "../lib/radix";
 import { useQuery } from "@tanstack/react-query";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import api from "../lib/api";
@@ -72,8 +72,6 @@ const PatientAnalytics = () => {
           value={tabValue}
           onChange={(_event, value) => setTabValue(value)}
           aria-label="Analytics tabs"
-          textColor="primary"
-          indicatorColor="primary"
         >
           <Tab value="demographics" label="Demographics" />
           <Tab value="diagnostic" label="Diagnostic" />

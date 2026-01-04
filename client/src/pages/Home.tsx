@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select } from "../lib/mui";
+import { Button, Card, CardContent, FormControl, InputLabel, Select, SelectMenuItem } from "../lib/radix";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -132,9 +132,9 @@ const Home = () => {
             onChange={(event) => setSelectedPatient(event.target.value)}
           >
             {(patientsQuery.data || []).map((patient) => (
-              <MenuItem key={patient._id} value={patient._id}>
+              <SelectMenuItem key={patient._id} value={patient._id}>
                 {patient.full_name}
-              </MenuItem>
+              </SelectMenuItem>
             ))}
           </Select>
         </FormControl>

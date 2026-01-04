@@ -1,6 +1,6 @@
 import { RadiologyReport } from "../../types";
 import { format } from "date-fns";
-import { Chip } from "../../lib/mui";
+import { Chip } from "../../lib/radix";
 
 interface ReportCardProps {
   report: RadiologyReport;

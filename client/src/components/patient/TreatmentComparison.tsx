@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, TextField } from "../../lib/mui";
+import { Button, Card, CardContent, TextField } from "../../lib/radix";
 import { useState } from "react";
 import api from "../../lib/api";
 import { Patient } from "../../types";
