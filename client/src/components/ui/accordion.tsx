@@ -6,12 +6,10 @@ import { cn } from "../../lib/utils";
 const Accordion = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root>
->(({ className, ...props }, ref) => <AccordionPrimitive.Root ref={ref} className={cn("w-full", className)} {...props} />);
+>(({ className, type = "single", collapsible = true, ...props }, ref) => (
+  <AccordionPrimitive.Root ref={ref} type={type} collapsible={collapsible} className={cn("w-full", className)} {...props} />
+));
 Accordion.displayName = "Accordion";
-Accordion.defaultProps = {
-  type: "single",
-  collapsible: true,
-};
 
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,

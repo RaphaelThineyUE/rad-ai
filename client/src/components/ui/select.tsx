@@ -152,7 +152,6 @@ const InputLabel = ({ children, id, className }: InputLabelProps) => {
 
 interface SelectWrapperProps {
   label?: string;
-  labelId?: string;
   value: string;
   onChange: (event: { target: { value: string } }) => void;
   children: React.ReactNode;
@@ -160,7 +159,7 @@ interface SelectWrapperProps {
   className?: string;
 }
 
-const SelectWrapper = ({ label, labelId, value, onChange, children, fullWidth, className }: SelectWrapperProps) => {
+const SelectWrapper = ({ label, value, onChange, children, fullWidth, className }: SelectWrapperProps) => {
   return (
     <Select value={value} onValueChange={(val) => onChange({ target: { value: val } })}>
       <SelectTrigger className={cn(fullWidth && "w-full", className)}>
