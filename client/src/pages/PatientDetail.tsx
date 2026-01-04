@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, Chip, Tab, Tabs } from "../lib/mui";
+import { Card, CardContent, Chip, Tab, Tabs } from "../lib/radix";
 import api from "../lib/api";
 import { Patient, TreatmentRecord } from "../types";
 import PatientTimeline from "../components/patient/PatientTimeline";
@@ -69,8 +69,6 @@ const PatientDetail = () => {
           value={tabValue}
           onChange={(_event, value) => setTabValue(value)}
           aria-label="Patient tabs"
-          textColor="primary"
-          indicatorColor="primary"
         >
           <Tab value="overview" label="Overview" />
           <Tab value="timeline" label="Timeline" />
