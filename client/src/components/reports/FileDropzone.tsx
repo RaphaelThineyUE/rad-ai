@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Button } from "../../lib/mui";
+import { Button } from "../../lib/radix";
 import { UploadCloud } from "lucide-react";
 
 interface FileDropzoneProps {

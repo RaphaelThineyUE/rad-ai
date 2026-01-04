@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Button, Menu, MenuItem } from "../../lib/mui";
+import { Button, Menu, MenuItem } from "../../lib/radix";
 import { LogOut, User } from "lucide-react";
 
 const navItems = [

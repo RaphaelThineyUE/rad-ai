@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from "../../lib/mui";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from "../../lib/radix";
 import { useForm } from "react-hook-form";
 
 interface AddPatientDialogProps {
@@ -29,7 +29,7 @@ const AddPatientDialog = ({ isOpen, onClose, onSubmit }: AddPatientDialogProps) 
   return (
     <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>Add Patient</DialogTitle>
-      <DialogContent className="flex flex-col gap-4">
+      <DialogContent className="flex flex-col gap-4 pt-4">
         <TextField label="Full name" {...register("full_name", { required: true })} />
         <TextField
           type="date"

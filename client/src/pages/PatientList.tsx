@@ -3,8 +3,8 @@ import {
   Button,
   FormControl,
   InputLabel,
-  MenuItem,
   Select,
+  SelectMenuItem,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableRow,
   TextField
-} from "../lib/mui";
+} from "../lib/radix";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -72,9 +72,9 @@ const PatientList = () => {
             onChange={(event) => setStage(event.target.value)}
           >
             {stages.map((item) => (
-              <MenuItem key={item} value={item}>
+              <SelectMenuItem key={item} value={item}>
                 {item}
-              </MenuItem>
+              </SelectMenuItem>
             ))}
           </Select>
         </FormControl>

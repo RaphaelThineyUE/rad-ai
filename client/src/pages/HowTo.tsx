@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControlLabel } from "../lib/mui";
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, FormControlLabel } from "../lib/radix";
 
 const steps = [
   "Create or select a patient profile",
